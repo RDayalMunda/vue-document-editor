@@ -20,7 +20,7 @@
 
 <script>
 import { defineCustomElement } from 'vue';
-import { move_children_forward_recursively, move_children_backwards_with_merging } from './imports/page-transition-mgmt.js';
+import { move_children_forward_recursively, move_children_backwards_with_merging, manage_list_index_over_pages } from './imports/page-transition-mgmt.js';
 
 export default {
 
@@ -240,6 +240,7 @@ export default {
 
             // move the content step by step to the next page, until it fits
             move_children_forward_recursively(page.elt, next_page_elt, () => (page.elt.clientHeight <= this.pages_height), this.do_not_break);
+            manage_list_index_over_pages(page?.elt?.parentNode);
           }
 
           // CLEANING

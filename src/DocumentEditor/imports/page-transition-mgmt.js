@@ -134,7 +134,26 @@ function move_children_backwards_with_merging (page_html_div, next_page_html_div
   }
 }
 
+function manage_list_index_over_pages(pages){
+  let listIds = []
+  let lists = pages.querySelectorAll('ol')
+  for(let i=0; i<lists.length; i++){
+    let listElem = lists[i]
+    if (listElem?.s_tag && !listIds.includes(listElem?.s_tag) ){
+      listIds.push( listElem.s_tag )
+      let childrenCount = listElem?.children?.length
+      for( let j=i+1; j<lists.length; j++ ){
+        if ( lists[j]?.s_tag == listElem.s_tag ){
+          lists[j].setAttribute('start', childrenCount+1)
+          childrenCount += ((lists[j]?.children?.length)?(lists[j]?.children?.length):0)
+        }
+      }
+    }
+  }
+}
+
 export {
   move_children_forward_recursively,
-  move_children_backwards_with_merging
+  move_children_backwards_with_merging,
+  manage_list_index_over_pages,
 };
